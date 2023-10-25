@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Adatbázis: `web2`
+-- Adatbázis: `vizvezetek_szerelok`
 --
-CREATE DATABASE IF NOT EXISTS `web2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `web2`;
+CREATE DATABASE IF NOT EXISTS `vizvezetek_szerelok` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `vizvezetek_szerelok`;
 
 -- --------------------------------------------------------
 
