@@ -2,11 +2,26 @@
 
 class Elerhetoseg_alapinfok_Controller
 {
-	public $baseName = 'elerhetoseg_alapinfok';  //meghatározni, hogy melyik oldalon vagyunk
-	public function main(array $vars) // a router által továbbított paramétereket kapja
+	public $baseName = 'elerhetoseg_alapinfok';  //meghatï¿½rozni, hogy melyik oldalon vagyunk
+	public function main(array $vars) // a router ï¿½ltal tovï¿½bbï¿½tott paramï¿½tereket kapja
 	{
-		//betöltjük a nézetet
+		//betï¿½ltjï¿½k a nï¿½zetet
 		$view = new View_Loader($this->baseName."_main");
+		$model = new Elerhetoseg_Alapinfok_Model;
+		$reqData = $model->get_data();
+		$view->assign('labels',$reqData['labels']);
+		$view->assign('data',$reqData['data']);
+		//modellbï¿½l lekï¿½rdezzï¿½k a kï¿½rt adatot
+		/*
+		if(! isset($vars[0])) $vars[0] = "";
+		$reqData = $testModel->get_data($vars[0]); 
+		//betï¿½ltjï¿½k a nï¿½zetet
+		$view = new View_Loader($this->baseName.'_main');
+		//ï¿½tadjuk a lekï¿½rdezett adatokat a nï¿½zetnek
+		$view->assign('title', $reqData['title']);
+		$view->assign('content', $reqData['content']);
+		*/
+		
 	}
 }
 
