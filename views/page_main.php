@@ -20,6 +20,6 @@
         <section>
             <?php if($viewData['render']) include($viewData['render']); ?>
         </section>
-        <footer> Copyright &copy; <?= date("Y") ?> Tiszta Víz Kft  | Create by Kalmár Sándor</footer>
+        <footer> Copyright &copy; <?= date("Y") ?> Tiszta Víz Kft  | Created by Kalmár Sándor</footer>
     </body>
 </html>
