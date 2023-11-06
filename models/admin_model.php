@@ -7,11 +7,39 @@ class Admin_Model
 	 'mvc' => array('title' => 'PHP MVC Framework', 'content' => 'works good'),
 	 'default' => array('title' => 'Default Title', 'content' => 'default content'));
 	
-	public function get_data($title)
+	public function get_data($params = null)
 	{
-		if(! array_key_exists($title, $this->data))
-		{ $title = "default"; }
-		$retData = $this->data[$title];
+		// if(! array_key_exists($title, $this->data))
+		// { $title = "default"; }
+		// $retData = $this->data[$title];
+		// return $retData;
+		$retData = array();
+		try {
+			$conn = Database::getConnection();
+			$sqlTelepulesek = "SELECT `telepules` FROM `hely` GROUP BY `telepules`;";
+			$stmt = $conn->query($sqlTelepulesek);
+			$telepulesek = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+			$sqlSzerelok = "SELECT DISTINCT `nev` FROM `szerelo`;";
+			$stmt = $conn->query($sqlSzerelok);
+			$szerelok = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+			$sqlMinDatum = "SELECT MIN(javdatum) FROM `munkalap`;";
+			$stmt = $conn->query($sqlMinDatum);
+			$minDatum = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+			$sqlMaxDatum = "SELECT MAX(javdatum) FROM `munkalap`;";
+			$stmt = $conn->query($sqlMaxDatum);
+			$maxDatum = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+			$retData['telepulesek'] = $telepulesek;
+			$retData['szerelok'] = $szerelok;
+			$retData['minDatum'] = $minDatum;
+			$retData['maxDatum'] = $maxDatum;
+		} catch (PDOException $e) {
+			$retData['eredmény'] = "ERROR";
+			$retData['uzenet'] = "Adatbázis hiba: ".$e->getMessage()."!";
+		}
 		return $retData;
 	}
 
@@ -38,6 +66,8 @@ class Admin_Model
 			echo "Error opening file: $filename";
 		}
 	}
+
+	
 }
 
 ?>

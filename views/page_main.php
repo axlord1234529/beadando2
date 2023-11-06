@@ -5,6 +5,7 @@
         <title>Tiszta Víz</title>
         <link rel="stylesheet" type="text/css" href="<?php echo SITE_ROOT?>css/main_style.css">
         <?php if($viewData['style']) echo '<link rel="stylesheet" type="text/css" href="'.$viewData['style'].'">'; ?>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
         <header>
