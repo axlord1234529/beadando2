@@ -22,7 +22,7 @@
         <label for="datum">Javítás dátum:</label>
         <input type="date" id="datum" value="<?=$viewData['minDatum']?>" min="<?=$viewData['minDatum']?>" max="<?=$viewData['maxDatum']?>">
         <br>
-        <button id="fetchData">Adatok lekérése</button>
 </form>
+<button id="fetchData">Adatok lekérése</button>
     <div id="result"></div>
     <script src="<?php echo SITE_ROOT?>scripts/admin.js"></script>

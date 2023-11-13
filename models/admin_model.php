@@ -1,5 +1,5 @@
 <?php
-
+include_once "services\mypdf.php";
 class Admin_Model
 {
 	private $data = array
@@ -43,10 +43,83 @@ class Admin_Model
 		return $retData;
 	}
 
+	public function get_munkalapok($nev,$telepules,$javdatum,$pdf = false)
+	{
+		try {
+			$conn = Database::getConnection();
+
+			$sql = 'SELECT bedatum,javdatum,hely.telepules,hely.utca,szerelo.nev,munkaora,anyagar FROM ((munkalap INNER JOIN hely ON hely.az = munkalap.helyaz) INNER JOIN szerelo ON munkalap.szereloaz = szerelo.az) WHERE hely.telepules = :telepules AND szerelo.nev = :nev AND javdatum = :javdatum;';
+			$stmt = $conn->prepare($sql);
+
+			$stmt->bindParam(':telepules', $telepules);
+			$stmt->bindParam(':nev', $nev);
+			$stmt->bindParam(':javdatum', $javdatum);
+			if(!$pdf)
+			{
+				$stmt->execute();
+				$munkalapok = $stmt->fetch(PDO::FETCH_ASSOC);
+
+				return $munkalapok;
+			}
+			
+			$stmt->execute();
+			$munkalapok = $stmt->fetchAll(PDO::FETCH_NUM);
+
+			return $munkalapok;
+		
+		} catch (PDOException $e) {
+			return false;
+		}
+	}
+
+	public function gen_pdf($nev,$telepules,$javdatum){
+		$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+		$pdf->SetCreator(PDF_CREATOR);
+		$pdf->SetAuthor('Kalmár Sándor');
+		$pdf->SetTitle('MUNKALAP');
+		$pdf->SetSubject('Web-programozás II - beadandó - TCPDF');
+		$pdf->SetKeywords('TCPDF, PDF, munkalap');
+
+		$pdf->SetHeaderData("", 0, "MUNKALAP", "Web-programozás II\nBeadandó 2\n".date('Y.m.d',time()));
+
+		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+		$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+		$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+		$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+		if (@file_exists(dirname(__FILE__).'/lang/hun.php')) {
+			require_once(dirname(__FILE__).'/lang/hun.php');
+			$pdf->setLanguageArray($l);
+		}
+
+
+		$pdf->SetFont('helvetica', 'B', 10);
+
+		$pdf->AddPage();
+
+		$caption = 'MUNKALAP';
+
+		$header = array('Beadás dátum', 'Javítás Dátum', 'Település', 'Utca', 'Név','Munkaóra','Anyagár');
+
+		$rows = $pdf->LoadData('vizvezetek_szerelok', 'munkalap',$nev,$telepules,$javdatum);
+		$pdf->ColoredTable($caption, $header, $rows);
+
+		$pdf->Output('Munkalap.pdf', 'D');
+	}
+
 	public function init_data()
 	{
 		$conn = Database::getConnection();
-		$filename = "D:\\xampp\htdocs\beadando2\models\szerelo.txt";
+		$filename = "D:\\xampp\htdocs\beadando2\models\hely.txt";
 		$file = fopen($filename, "r");
 
 		if ($file) {
@@ -57,8 +130,8 @@ class Admin_Model
 			while (($data = fgetcsv($file, 0, "\t")) !== false) {
 				
 				// Perform the SQL INSERT operation
-				$sql = "INSERT INTO szerelo (az,nev,kezdev) VALUES ('','$data[1]', '$data[2]');";
-				echo $sql."<br>";
+				$sql = "INSERT INTO hely (az,telepules,utca) VALUES ($data[0],'$data[1]', '$data[2]');";
+				//echo $sql."<br>";
 				$conn->query($sql) === true;
 			}
 			fclose($file);
