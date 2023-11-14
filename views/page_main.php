@@ -16,7 +16,8 @@
             <?php echo Menu::getMenu($viewData['selectedItems']); ?>
         </nav>
         <aside>
-                <p>Phasellus wisi nulla...</p>
+                <h2>Tiszta Víz Kft.</h2>
+                <p>Megbízható szolgáltatás, kristálytiszta megoldások minden vízproblémára!</p>
         </aside>
         <section>
             <?php if($viewData['render']) include($viewData['render']); ?>
