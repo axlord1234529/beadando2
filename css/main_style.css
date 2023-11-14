@@ -4,6 +4,10 @@ header, footer {
     background-color: gray;
     clear: left;
 }
+
+footer{
+    margin-top: auto;
+}
 h1.header {
     padding: 0;
     margin: 0;
@@ -21,6 +25,8 @@ section {
     margin-left: 190px;
     border-left: 1px solid gray;
     padding: 1em;
+    max-width: 600px;
+    flex: 1;
 }
 ul {
     float:left;
