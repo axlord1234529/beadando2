@@ -1,5 +1,3 @@
-<h2>
-    <br>Üdvözöljük az új rendszerünkben!<br>
-    <br>Jó munkát kívánunk a rendszerünkkel!<br>
-    <br>Kezdhet ...<br>
-</h2>
+<h2>Üdvözöljük a Tiszta Víz Kft. honlapján!</h2>
+<p>Hosszú ideje az Ön szolgálatában állunk. A Tiszta Víz Kft. munkatársai nemcsak az építkezéseken végzett munkájukkal büszkélkedhetnek, hanem a mindennapi élet apró problémáinak gyors és hatékony megoldásával is.</p>
+<p>Legyen szó egy egyszerű csöpögő csapról vagy egy komolyabb csőtörésről, mi itt vagyunk, hogy segítsünk. Az ügyfélszolgálatunk mindig rendelkezésre áll, hogy a lehető leghamarabb megoldást nyújthassunk a problémáira.</p>
