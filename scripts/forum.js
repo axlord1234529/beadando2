@@ -23,7 +23,7 @@ class FakeForum {
         this.posts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.innerHTML = `<strong>${post.author}</strong>: ${post.content}
-                <button onclick="editPost(${post.id})">Edit</button>
+                <br><button onclick="editPost(${post.id})">Edit</button>
                 <button onclick="forum.deletePost(${post.id})">Delete</button><hr>`;
             postsContainer.appendChild(postElement);
         });
@@ -38,7 +38,7 @@ class FakeForum {
             body: JSON.stringify({
                 title: newPost.author,
                 body: newPost.content,
-                userId: 1, // User ID for example purposes
+                userId: 1, 
             }),
         });
 
@@ -73,7 +73,7 @@ class FakeForum {
             body: JSON.stringify({
                 title: updatedPost.author,
                 body: updatedPost.content,
-                userId: 1, // User ID for example purposes
+                userId: 1,
             }),
         });
 
@@ -86,7 +86,6 @@ class FakeForum {
     }
 }
 
-// Function to edit a post
 async function editPost(postId) {
     const updatedAuthor = prompt('Enter the updated author:');
     const updatedContent = prompt('Enter the updated content:');
@@ -97,10 +96,8 @@ async function editPost(postId) {
     }
 }
 
-// Create an instance of the FakeForum class
 const forum = new FakeForum();
 
-// Fetch posts and display them when the page loads
 window.onload = async () => {
     await forum.fetchPosts();
     forum.displayPosts();
@@ -111,10 +108,9 @@ async function addNewPost() {
     const content = document.getElementById('content').value;
     const newPost = new Post(author, content);
     await forum.addPost(newPost);
-    // Clear the form after adding the post
     document.getElementById('newPostForm').reset();
 }
-// Add new post form event listener
+
 const newPostForm = document.getElementById('newPostForm');
 newPostForm.addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -122,6 +118,6 @@ newPostForm.addEventListener('submit', async function (e) {
     const content = document.getElementById('content').value;
     const newPost = new Post(author, content);
     await forum.addPost(newPost);
-    // Clear the form after adding the post
+    
     this.reset();
 });
