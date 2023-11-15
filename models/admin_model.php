@@ -123,15 +123,11 @@ class Admin_Model
 		$file = fopen($filename, "r");
 
 		if ($file) {
-			// Read the header line (column names)
 			$header = fgetcsv($file, 0, "\t");
 			
-			// Loop through the rest of the file and insert data into the database
 			while (($data = fgetcsv($file, 0, "\t")) !== false) {
 				
-				// Perform the SQL INSERT operation
 				$sql = "INSERT INTO hely (az,telepules,utca) VALUES ($data[0],'$data[1]', '$data[2]');";
-				//echo $sql."<br>";
 				$conn->query($sql) === true;
 			}
 			fclose($file);
