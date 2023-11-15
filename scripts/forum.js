@@ -23,7 +23,7 @@ class FakeForum {
         this.posts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.innerHTML = `<strong>${post.author}</strong>: ${post.content}
-                <button onclick="editPost(${post.id})">Edit</button>
+                <br><button onclick="editPost(${post.id})">Edit</button>
                 <button onclick="forum.deletePost(${post.id})">Delete</button><hr>`;
             postsContainer.appendChild(postElement);
         });
